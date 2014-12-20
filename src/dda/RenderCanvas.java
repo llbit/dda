@@ -24,8 +24,6 @@ public class RenderCanvas extends Canvas {
 	private static final int RED = 0xFFFF4444;
 	private static final int ORNG = 0xFFFF8800;
 	private static final Color COL_ORNG = new Color(ORNG);
-	private static final Color COL_INTERSECT = new Color(0xFF000000);
-	private static final int YELLOW = 0xFFFFFF00;
 	private static final int GREEN = 0xFF44FF44;
 	private static final int BLUE = 0xFF4444FF;
 
@@ -130,6 +128,13 @@ public class RenderCanvas extends Canvas {
 			do {
 				g = bufferStrategy.getDrawGraphics();
 				g.drawImage(buffer, 0, 0, windowWidth, windowHeight, null);
+				g.setColor(Color.GRAY);
+				for (int x = 0; x < width; ++x) {
+					g.drawLine(x*PIXEL_SCALE, 0, x*PIXEL_SCALE, height*PIXEL_SCALE);
+				}
+				for (int y = 0; y < width; ++y) {
+					g.drawLine(0, y*PIXEL_SCALE, width*PIXEL_SCALE, y*PIXEL_SCALE);
+				}
 				g.setColor(COL_ORNG);
 				int lx0 = (int) (x0*PIXEL_SCALE);
 				int ly0 = (int) (y0*PIXEL_SCALE);
@@ -154,14 +159,6 @@ public class RenderCanvas extends Canvas {
 		if (ix >= 0 && ix < width &&
 				iy >= 0 && iy < height) {
 			buffer.setRGB(ix, iy, argb);
-			return true;
-		}
-		return false;
-	}
-	private boolean draw2(boolean draw, int ix, int iy, int argb) {
-		if (ix >= 0 && ix < width &&
-				iy >= 0 && iy < height) {
-			if (draw) buffer.setRGB(ix, iy, argb);
 			return true;
 		}
 		return false;
